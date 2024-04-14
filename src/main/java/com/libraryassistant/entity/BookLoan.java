@@ -26,7 +26,7 @@ public class BookLoan {
     public BookLoan() {
     }
 
-    public BookLoan(User user, Book book, LocalDate borrowedDate) {
+    public BookLoan(User user, Book book) {
         this.user = user;
         this.book = book;
         this.borrowedDate = LocalDate.now();

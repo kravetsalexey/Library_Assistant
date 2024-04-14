@@ -5,7 +5,6 @@ import com.libraryassistant.DTO.ReturnBookDto;
 import com.libraryassistant.entity.Book;
 import com.libraryassistant.entity.BookLoan;
 import com.libraryassistant.entity.User;
-import com.example.libraryassistant.exceptions.*;
 import com.libraryassistant.exceptions.*;
 import com.libraryassistant.repository.BookLoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class BookLoanService {
     public BookLoan takeBook(BookLoanDto bookLoanDto) {
         User user = userService.getUser(bookLoanDto.getUserId());
         Book book = bookService.getBook(bookLoanDto.getBookId());
-        BookLoan bookLoan = new BookLoan(user,book, LocalDate.now());
+        BookLoan bookLoan = new BookLoan(user,book);
         if (book.getCount() > 0){
             book.setCount(book.getCount() - 1);
             bookService.updateBook(book);

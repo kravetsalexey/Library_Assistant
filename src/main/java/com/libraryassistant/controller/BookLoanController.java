@@ -15,7 +15,7 @@ public class BookLoanController {
 
     private final BookLoanService bookLoanService;
 
-    @PostMapping("/take")
+    @PutMapping("/take")
     public ResponseEntity<?> takeBook(@RequestBody BookLoanDto bookLoanDto){
         return ResponseEntity.ok(bookLoanService.takeBook(bookLoanDto));
     }

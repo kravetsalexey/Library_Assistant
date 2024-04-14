@@ -1,13 +1,11 @@
 package com.libraryassistant.controller;
 
 import com.libraryassistant.entity.Book;
-import com.libraryassistant.repository.BookRepository;
 import com.libraryassistant.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,17 +16,18 @@ public class BookController {
     @Autowired
     private final BookService bookService;
 
-    @Autowired
-    private BookRepository bookRepository;
-
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     public ResponseEntity<?> addBook(@RequestBody Book book) {
-        Book addedBook = bookService.addBook(book);
-        return ResponseEntity.created(URI.create("/books/add" + addedBook.getId())).body(addedBook);
+        return ResponseEntity.ok(bookService.addBook(book));
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> updateBook(@RequestBody Book book) {
+        return ResponseEntity.ok(bookService.updateBook(book));
     }
 
     @GetMapping("/get")
@@ -37,7 +36,7 @@ public class BookController {
     }
     @GetMapping("/getall")
     public List<Book> getAllBooks(){
-        return bookRepository.findAll();
+        return bookService.getAllBooks();
     }
 
     @DeleteMapping("/delete")
@@ -47,7 +46,6 @@ public class BookController {
 
     @GetMapping("/mostpopular")
     public ResponseEntity<Book> getMostPopularBook(LocalDate startDate, LocalDate endDate){
-        Book book = bookService.getMostPopularBook(startDate,endDate);
-        return ResponseEntity.ok(book);
+        return ResponseEntity.ok(bookService.getMostPopularBook(startDate,endDate));
     }
 }

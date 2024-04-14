@@ -1,12 +1,12 @@
 package com.libraryassistant.service;
 
 import com.libraryassistant.entity.User;
+import com.libraryassistant.exceptions.EntityAlreadyExistsException;
 import com.libraryassistant.exceptions.UserNotFoundException;
 import com.libraryassistant.repository.BookLoanRepository;
 import com.libraryassistant.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +21,12 @@ public class UserService {
     private BookLoanRepository bookLoanRepository;
 
     public User addUser(User user) {
+        for (User allUser : getAllUsers()) {
+            if (user.getName().equals(allUser.getName()) && user.getEmail().equals(allUser.getEmail())){
+                throw new EntityAlreadyExistsException();
+            }
+        }
+        user.setId(1L);
         return userRepository.save(user);
     }
 
@@ -31,8 +37,15 @@ public class UserService {
         Long userId = bookLoanRepository.findUserWithMostBooksRead(startDate, endDate);
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
+    public User updateUser(User user){
+        if (userRepository.findById(user.getId()).isEmpty()) {
+            throw new UserNotFoundException();
+        }
+        userRepository.updateUser(user.getId(), user.getName(), user.getEmail());
+        return user;
+    }
 
-    public User deleteUser(@PathVariable Long id){
+    public User deleteUser(Long id){
         User user = getUser(id);
         userRepository.delete(user);
         return user;

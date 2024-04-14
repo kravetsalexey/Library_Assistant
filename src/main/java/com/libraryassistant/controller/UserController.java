@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,10 +20,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user) {
-        User createdUser = userService.addUser(user);
-        return ResponseEntity.created(URI.create("/add/" + createdUser.getId())).body(createdUser);
+        return ResponseEntity.ok(userService.addUser(user));
+    }
+    @PostMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        return ResponseEntity.ok(userService.updateUser(user));
     }
 
     @GetMapping("/getall")
@@ -34,8 +36,7 @@ public class UserController {
 
     @GetMapping("/get")
     public ResponseEntity<User> getUser(@RequestParam Long id) {
-        User user = userService.getUser(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getUser(id));
     }
 
     @DeleteMapping("/delete")
@@ -45,7 +46,6 @@ public class UserController {
 
     @GetMapping("/bestreader")
     public ResponseEntity<User> getUserWithMostBookRead(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
-        User user = userService.getUserWithMostBooksRead(startDate, endDate);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getUserWithMostBooksRead(startDate,endDate));
     }
 }
