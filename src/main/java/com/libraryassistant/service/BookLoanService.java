@@ -9,6 +9,7 @@ import com.libraryassistant.exceptions.*;
 import com.libraryassistant.repository.BookLoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -76,5 +77,13 @@ public class BookLoanService {
             return bookLoans;
         }
         throw new NoAnyBookLoanException();
+    }
+
+    public List<BookLoan> getSpecificBookLoan(@RequestParam Long userId,@RequestParam Long bookId){
+        List<BookLoan> bookLoans = bookLoanRepository.findByUserAndBook(userService.getUser(userId),bookService.getBook(bookId));
+        if (!bookLoans.isEmpty()){
+            return bookLoans;
+        }
+        throw new NoAnyBookLoansException();
     }
 }

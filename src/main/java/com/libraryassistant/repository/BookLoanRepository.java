@@ -1,6 +1,9 @@
 package com.libraryassistant.repository;
 
+import com.libraryassistant.entity.Book;
 import com.libraryassistant.entity.BookLoan;
+import com.libraryassistant.entity.User;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@ComponentScan
 public interface BookLoanRepository extends JpaRepository<BookLoan, Long> {
 //    List<BookLoan> findByUser(User user);
 //    List<BookLoan> findByBook(Book book);
@@ -26,4 +30,8 @@ public interface BookLoanRepository extends JpaRepository<BookLoan, Long> {
 
     @Query("SELECT bl FROM BookLoan bl WHERE bl.book.id = :id ")
     List<BookLoan> findByBookId(Long id);
+
+    @Query("SELECT bl FROM BookLoan bl WHERE bl.user = ?1 AND bl.book = ?2")
+    List<BookLoan> findByUserAndBook(@Param("user") User user, @Param("book") Book book);
+
 }

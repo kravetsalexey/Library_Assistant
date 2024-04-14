@@ -2,6 +2,7 @@ package com.libraryassistant.controller;
 
 import com.libraryassistant.DTO.BookLoanDto;
 import com.libraryassistant.DTO.ReturnBookDto;
+import com.libraryassistant.entity.Book;
 import com.libraryassistant.entity.BookLoan;
 import com.libraryassistant.service.BookLoanService;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,10 @@ public class BookLoanController {
     @DeleteMapping("/delete")
     public ResponseEntity<BookLoan> deleteBookLoan(@RequestParam Long bookLoanId){
         return ResponseEntity.ok(bookLoanService.deleteBookLoan(bookLoanId));
+    }
+    @GetMapping("/specific")
+    public ResponseEntity<List<BookLoan>> getSpecificBookLoan(@RequestParam Long userId, @RequestParam Long bookId){
+        return ResponseEntity.ok(bookLoanService.getSpecificBookLoan(userId,bookId));
     }
 
     public BookLoanController(BookLoanService bookLoanService){

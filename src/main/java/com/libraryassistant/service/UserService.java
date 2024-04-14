@@ -26,13 +26,13 @@ public class UserService {
                 throw new EntityAlreadyExistsException();
             }
         }
-        user.setId(1L);
         return userRepository.save(user);
     }
 
     public User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
+
     public User getUserWithMostBooksRead(LocalDate startDate, LocalDate endDate) {
         Long userId = bookLoanRepository.findUserWithMostBooksRead(startDate, endDate);
         return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
@@ -44,7 +44,6 @@ public class UserService {
         userRepository.updateUser(user.getId(), user.getName(), user.getEmail());
         return user;
     }
-
     public User deleteUser(Long id){
         User user = getUser(id);
         userRepository.delete(user);
