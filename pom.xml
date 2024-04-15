@@ -8,9 +8,8 @@
         <!--  lookup parent from repository  -->
     </parent>
     <groupId>com</groupId>
-    <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <artifactId>library-assistant</artifactId>
+    <name>library-assistant</name>
     <description>demo</description>
     <properties>
         <java.version>21</java.version>
