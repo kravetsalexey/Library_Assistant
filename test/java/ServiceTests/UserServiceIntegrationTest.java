@@ -162,4 +162,11 @@ public class UserServiceIntegrationTest {
         assertEquals(2, foundUsers.size());
     }
 
+    @Test
+    public void testAddUser_InvalidEmail(){
+        User user = new User();
+        user.setEmail("alexey.com");
+
+    }
+
 }

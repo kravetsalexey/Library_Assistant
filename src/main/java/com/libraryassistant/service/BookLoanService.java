@@ -1,7 +1,6 @@
 package com.libraryassistant.service;
 
 import com.libraryassistant.DTO.BookLoanDto;
-import com.libraryassistant.DTO.ReturnBookDto;
 import com.libraryassistant.entity.Book;
 import com.libraryassistant.entity.BookLoan;
 import com.libraryassistant.entity.User;
@@ -37,8 +36,8 @@ public class BookLoanService {
         throw new OutOfBooksException();
     }
 
-    public BookLoan returnBook(ReturnBookDto returnBookDto){
-        BookLoan bookLoan = bookLoanRepository.findById(returnBookDto.getBookLoanId()).orElseThrow(BookLoanNotFoundException::new);
+    public BookLoan returnBook(Long id){
+        BookLoan bookLoan = bookLoanRepository.findById(id).orElseThrow(BookLoanNotFoundException::new);
         bookLoan.setReturnDate(LocalDate.now());
         Book book = bookLoan.getBook();
         book.setCount(book.getCount() + 1);
@@ -80,7 +79,7 @@ public class BookLoanService {
     }
 
     public List<BookLoan> getSpecificBookLoan(@RequestParam Long userId,@RequestParam Long bookId){
-        List<BookLoan> bookLoans = bookLoanRepository.findByUserAndBook(userService.getUser(userId),bookService.getBook(bookId));
+        List<BookLoan> bookLoans = bookLoanRepository.findByUserIdAndBookId(userId,bookId);
         if (!bookLoans.isEmpty()){
             return bookLoans;
         }

@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<User> deleteUser(@RequestParam Long id) {
-        return ResponseEntity.ok(userService.deleteUser(id));
+    public ResponseEntity<?> deleteUser(@RequestParam Long id) {
+        return ResponseEntity.ok(" Пользователь " + userService.deleteUser(id) + " удален.");
     }
 
     @GetMapping("/bestreader")

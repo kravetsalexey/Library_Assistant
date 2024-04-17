@@ -1,8 +1,6 @@
 package com.libraryassistant.controller;
 
 import com.libraryassistant.DTO.BookLoanDto;
-import com.libraryassistant.DTO.ReturnBookDto;
-import com.libraryassistant.entity.Book;
 import com.libraryassistant.entity.BookLoan;
 import com.libraryassistant.service.BookLoanService;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +20,8 @@ public class BookLoanController {
     }
 
     @PostMapping("/return")
-    public ResponseEntity<BookLoan> returnBook(@RequestBody ReturnBookDto returnBookDto){
-            return ResponseEntity.ok(bookLoanService.returnBook(returnBookDto));
+    public ResponseEntity<BookLoan> returnBook(@RequestParam Long bookLoanId){
+            return ResponseEntity.ok(bookLoanService.returnBook(bookLoanId));
     }
 
     @GetMapping("/getUserLoans")

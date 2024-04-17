@@ -1,8 +1,6 @@
 package com.libraryassistant.DTO;
 
-import io.swagger.v3.oas.annotations.Hidden;
 
-@Hidden
 public class ReturnBookDto {
 
     private Long bookLoanId;
@@ -14,11 +12,5 @@ public class ReturnBookDto {
         this.bookLoanId = bookLoanId;
     }
 
-    public Long getBookLoanId() {
-        return bookLoanId;
-    }
 
-    public void setBookLoanId(Long bookLoanId) {
-        this.bookLoanId = bookLoanId;
-    }
 }

@@ -11,9 +11,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
     @ExceptionHandler({BaseException.class})
-    public ResponseEntity<Object> handleBookLoanNotFoundException(
+    public ResponseEntity<Object> handleRequestExceptions(
             BaseException ex, WebRequest request) {
         return new ResponseEntity<Object>(
+                ex.getErrorCode(), new HttpHeaders(), ex.getStatus());
+    }
+
+    @ExceptionHandler({InvalidEmailFormatException.class})
+    public ResponseEntity<Object> handInvalidEmailFormatException(
+            InvalidEmailFormatException ex, WebRequest request) {
+        return new ResponseEntity<>(
                 ex.getErrorCode(), new HttpHeaders(), ex.getStatus());
     }
 }
