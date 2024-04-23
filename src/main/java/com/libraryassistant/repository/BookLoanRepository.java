@@ -1,6 +1,7 @@
 package com.libraryassistant.repository;
 
 import com.libraryassistant.entity.BookLoan;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Repository
 @ComponentScan
+@Transactional
 public interface BookLoanRepository extends JpaRepository<BookLoan, Long> {
 
     @Query("SELECT bl.book.id FROM BookLoan bl WHERE bl.returnDate BETWEEN :startDate AND :endDate GROUP BY bl.book.id ORDER BY COUNT(bl.book.id) DESC LIMIT 1")

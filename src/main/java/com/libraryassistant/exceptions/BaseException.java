@@ -1,8 +1,10 @@
 package com.libraryassistant.exceptions;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@Getter
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class BaseException extends RuntimeException {
 
@@ -10,14 +12,4 @@ public class BaseException extends RuntimeException {
     private final HttpStatus status = HttpStatus.NOT_FOUND;
 
 
-
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    }
+}

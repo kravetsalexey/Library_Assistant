@@ -10,42 +10,39 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users-management")
 public class UserController {
 
     @Autowired
-    private final UserService userService;
+    private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @PutMapping("/add")
+    @PostMapping("/managed-users")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.addUser(user));
     }
-    @PostMapping("/update")
+
+    @PutMapping("/managed-users/{id}")
     public ResponseEntity<User> updateUser(@RequestBody User user){
         return ResponseEntity.ok(userService.updateUser(user));
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/managed-users")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/get")
+    @GetMapping("/managed-users/{id}")
     public ResponseEntity<User> getUser(@RequestParam Long id) {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam Long id) {
-        return ResponseEntity.ok(" Пользователь " + userService.deleteUser(id) + " удален.");
-    }
-
-    @GetMapping("/bestreader")
+    @GetMapping("/managed-users/best-reader")
     public ResponseEntity<User> getUserWithMostBookRead(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
         return ResponseEntity.ok(userService.getUserWithMostBooksRead(startDate,endDate));
+    }
+
+    @DeleteMapping("/managed-users/{id}")
+    public ResponseEntity<?> deleteUser(@RequestParam Long id) {
+        return ResponseEntity.ok(" Пользователь " + userService.deleteUser(id) + " удален.");
     }
 }

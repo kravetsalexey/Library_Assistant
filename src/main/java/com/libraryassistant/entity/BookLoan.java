@@ -7,8 +7,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
+@RequiredArgsConstructor
 public class BookLoan {
 
     @Id

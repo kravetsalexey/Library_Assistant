@@ -6,6 +6,7 @@ import com.libraryassistant.exceptions.EntityAlreadyExistsException;
 import com.libraryassistant.exceptions.MostPopularBookNotFoundException;
 import com.libraryassistant.repository.BookLoanRepository;
 import com.libraryassistant.repository.BookRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class BookService {
     @Autowired
     private BookLoanRepository bookLoanRepository;
 
+    @Autowired
+    EntityManager em;
+
     public Book addBook(Book book){
         for (Book allBook : getAllBooks()) {
             if (book.getTitle().equals(allBook.getTitle()) && book.getAuthor().equals(allBook.getAuthor())){
@@ -31,10 +35,9 @@ public class BookService {
     }
 
     public Book updateBook(Book book){
-        if (bookRepository.findById(book.getId()).isEmpty()) {
-            throw new BookNotFoundException();
+        if (!em.contains(book)){
+            book = em.merge(book);
         }
-        bookRepository.updateBook(book.getId(),book.getTitle(),book.getAuthor(),book.getCount());
         return book;
     }
 

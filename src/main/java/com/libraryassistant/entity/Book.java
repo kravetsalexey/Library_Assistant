@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @RequiredArgsConstructor
 @ToString
+@Data
 public class Book {
 
     @Id
@@ -21,4 +22,9 @@ public class Book {
 
     private Integer count;
 
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.count = 0;
+    }
 }
